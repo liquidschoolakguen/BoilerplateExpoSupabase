@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Platform, FlatList } from 'react-native';
+import { View, StyleSheet, Platform, FlatList, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import { useCart } from '@/providers/CartProvider';
 import CartListItem from '@/components/CartListItem';
+import Button from '@/components/Button';
 
 
 const CartScreen = () => {
   const router = useRouter();
-  const { items } = useCart();
+  const { items, total } = useCart();
 
   return (
-    <View style={styles.container}>
+    <View style={{padding: 10}}    >
       <FlatList data={items} renderItem={({ item }) => <CartListItem cartItem={item} />}
-        contentContainerStyle={{ gap: 10, padding: 10 }}
+        contentContainerStyle={{ gap: 10}}
          />
-
+      <Text style={{marginTop: 20, fontSize: 20, fontWeight: '500'}}>${total.toFixed(2)}</Text>
+      <Button text="Checkout" onPress={() => router.push('/checkout')} />
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
