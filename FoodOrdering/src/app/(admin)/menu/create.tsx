@@ -18,7 +18,7 @@ const CreateProductScreen = () => {
   const { id } = useLocalSearchParams();
 
   const isUpdating = !!id;
-  console.log('id B:', id);
+  //console.log('id B:', id);
 
   const resetFileds = () => {
     setName('');

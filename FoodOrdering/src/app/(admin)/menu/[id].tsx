@@ -16,7 +16,7 @@ const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 const ProductDetailsScreen = () => {
     const { id } = useLocalSearchParams();
     const { addItem } = useCart();
-    console.log('id A:', id);
+    //console.log('id A:', id);
     const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
 
     const product = products.find((p) => p.id.toString() === id);
