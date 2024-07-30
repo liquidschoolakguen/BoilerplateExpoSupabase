@@ -13,6 +13,7 @@ type ProductListItemProps = {
 const ProductListItem = ({product}: ProductListItemProps) => {
   const segments = useSegments(); // das braucht man, damit die admin und die user route nicht durcheinander kommen
   return (
+    // @ts-ignore
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
     <Pressable style={styles.container}>
       <Image
