@@ -18,7 +18,7 @@ export default function OrderDetailScreen() {
     )
   }
 
-  console.log(order);
+  //console.log(order);
 
   return (
     <View style={{ padding: 10, gap: 20 }}>

@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import { Link, Redirect } from 'expo-router';
 import { useAuth } from '@/providers/AuthProvider';
 import { supabase } from '@/lib/supabase';
+import ButtonRed from '@/components/ButtonRed';
 
 
 // das hier scheint der Startpunkt zu sein
@@ -34,7 +35,7 @@ const index = () => {
       </Link>
 
 
-      <Button onPress={() => supabase.auth.signOut()} text="Sign out" />
+      <ButtonRed  onPress={() => supabase.auth.signOut()} text="Sign out" />
     </View>
   );
 };

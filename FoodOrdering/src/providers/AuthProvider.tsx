@@ -49,10 +49,10 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   }, []);
 
 
-console.log(profile);
-
+//console.log(profile);
 
   return (
+    // @ts-ignore
     <AuthContext.Provider value={{ session, loading, profile, isAdmin: profile?.group === 'ADMIN' }}>
       {children}
     </AuthContext.Provider>
