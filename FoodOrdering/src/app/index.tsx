@@ -9,23 +9,33 @@ import ButtonRed from '@/components/ButtonRed';
 
 // das hier scheint der Startpunkt zu sein
 const index = () => {
+
+
   const { session, loading, isAdmin } = useAuth();
-  //console.log(session);
+
 
   if (loading) {
+    console.log('loading...');
     return <ActivityIndicator />
   }
+    console.log('loading beendet ');
 
   if (!session) {
+    console.log('session nicht vorhanden');
+    console.log('_______________________');
     return <Redirect href="/sign-in" />;
   }
-
+    console.log('session vorhanden');
   if (!isAdmin) {
-    return <Redirect href="/(user)" />;
-  }
+    console.log('kein Admin');
+    console.log('_______________________');
+    return <Redirect href="/landing-page" />;
 
+  }
+    console.log('Admin');
+    console.log('_______________________');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', padding: 10 }}>
+    <View style={{ flex: 1, justifyContent: 'center', padding: 10, backgroundColor: '#92a8d1' }}>
       <Link href={'/(user)'} asChild>
         <Button text="User" />
       </Link>

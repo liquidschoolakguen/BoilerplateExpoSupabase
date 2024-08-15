@@ -10,7 +10,7 @@ import Button from '@/components/Button';
 
 const CartScreen = () => {
   const router = useRouter();
-  const { items, total } = useCart();
+  const { items, total, checkout } = useCart();
 
   return (
     <View style={{padding: 10}}    >
@@ -18,7 +18,7 @@ const CartScreen = () => {
         contentContainerStyle={{ gap: 10}}
          />
       <Text style={{marginTop: 20, fontSize: 20, fontWeight: '500'}}>${total.toFixed(2)}</Text>
-      <Button text="Checkout" onPress={() => router.push('/checkout')} />
+      <Button text="Checkout" onPress={checkout} />
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>

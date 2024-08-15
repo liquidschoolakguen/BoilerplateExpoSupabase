@@ -2,15 +2,52 @@ import 'react-native-url-polyfill/auto';
 import * as SecureStore from 'expo-secure-store';
 import { createClient } from '@supabase/supabase-js';
 import { Database } from '@/database.types';
+
+const MAX_STORAGE_SIZE = 2048;
+
 const ExpoSecureStoreAdapter = {
-  getItem: (key: string) => {
-    return SecureStore.getItemAsync(key);
+  getItem: async (key: string) => {
+    const partCount = await SecureStore.getItemAsync(`${key}_partCount`);
+    if (!partCount) {
+      return null;
+    }
+
+    const totalParts = parseInt(partCount, 10);
+    let fullString = '';
+
+    for (let i = 0; i < totalParts; i++) {
+      const partValue = await SecureStore.getItemAsync(`${key}_part${i}`);
+      if (partValue) {
+        fullString += partValue;
+      }
+    }
+
+    return fullString;
   },
-  setItem: (key: string, value: string) => {
-    SecureStore.setItemAsync(key, value);
+
+  setItem: async (key: string, value: string) => {
+    const parts = Math.ceil(value.length / MAX_STORAGE_SIZE);
+
+    for (let i = 0; i < parts; i++) {
+      const partValue = value.substring(i * MAX_STORAGE_SIZE, (i + 1) * MAX_STORAGE_SIZE);
+      await SecureStore.setItemAsync(`${key}_part${i}`, partValue);
+    }
+
+    await SecureStore.setItemAsync(`${key}_partCount`, parts.toString());
   },
-  removeItem: (key: string) => {
-    SecureStore.deleteItemAsync(key);
+
+  removeItem: async (key: string) => {
+    const partCount = await SecureStore.getItemAsync(`${key}_partCount`);
+    if (!partCount) {
+      return;
+    }
+
+    const totalParts = parseInt(partCount, 10);
+    for (let i = 0; i < totalParts; i++) {
+      await SecureStore.deleteItemAsync(`${key}_part${i}`);
+    }
+
+    await SecureStore.deleteItemAsync(`${key}_partCount`);
   },
 };
 

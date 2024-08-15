@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../../lib/supabase';
-import { Product } from '../../types';
+
 
 export const useProductList = () => {
   return useQuery({
@@ -16,7 +16,7 @@ export const useProductList = () => {
 };
 
 export const useProduct = (id: number) => {
-  return useQuery<Product>({
+  return useQuery({
     queryKey: ['product', id],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -56,9 +56,7 @@ export const useInsertProduct = () => {
     async onSuccess() {
       await queryClient.invalidateQueries({queryKey: ['products']});
 
-
     }
-
 
   });
 };

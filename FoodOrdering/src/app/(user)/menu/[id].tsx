@@ -1,4 +1,4 @@
-import { router, Stack, useLocalSearchParams } from 'expo-router';
+import {Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { View, Text, StyleSheet, Image, Pressable, ActivityIndicator } from 'react-native';
 import React, { useState } from 'react';
 import { defaultPizzaImage } from '@components/ProductListItem';
@@ -13,17 +13,16 @@ const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 
 const ProductDetailsScreen = () => {
-    const { id } = useLocalSearchParams();
-    const { addItem } = useCart();
+    const { id: idString } = useLocalSearchParams();
+    const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
+    const { data: product,isLoading, error,} = useProduct(id);
+
+
+    const { addItem } = useCart();
+    const router = useRouter();
     const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
 
-
-    const {
-        data: product,
-        isLoading,
-        error,
-      } = useProduct(parseInt(typeof id === 'string' ? id : id[0]));
 
       if (isLoading) {
         return <ActivityIndicator />;

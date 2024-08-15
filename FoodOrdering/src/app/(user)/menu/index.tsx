@@ -2,9 +2,6 @@ import { ActivityIndicator, FlatList, Text } from 'react-native';
 //import products from '@assets/data/products'; dummyData wird nicht mehr gebraucht,
 //nachdem die Datenbank eingebunden wurde
 import ProductListItem from '@components/ProductListItem';
-import { useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useQuery } from '@tanstack/react-query';
 import { useProductList } from  '@/api/products';
 
 export default function TabOneScreen() {
