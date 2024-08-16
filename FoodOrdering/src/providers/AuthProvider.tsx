@@ -35,38 +35,14 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
 
   useEffect(() => {
-    //console.log('AuthProvider useEffect');
-    const fetchSession = async () => {
-      const { data: {session} } = await supabase.auth.getSession();
-      setSession(session);
 
 
-      if(session){
-       // console.log('first login');
-        const { data } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
-        setProfile(data || null);
-      }else{
-
-        setProfile(null);
-      }
-
-      setLoading(false);
-    }
-
-    fetchSession();
 
      supabase.auth.onAuthStateChange(async(_event, session) => {
+      //console.log('onAuthStateChange  '+_event);
       setLoading(true);
 
       setSession(session);
-
-
-
-
 
       if(session){
         //console.log('second login');
@@ -87,10 +63,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     });
   }, []);
 
-
-  useEffect(() => {
-
-  }, [profile]);
 
   return (
 

@@ -34,8 +34,10 @@ const SignInScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: 'Sign in' }} />
-      <Button onPress={() => quickLogin('1234567887654321@gmail.com', '12345678')} disabled={loading} text="Quick ADMIN" />
-      <Button onPress={() => quickLogin('U@web.de', '111111')} disabled={loading} text="Quick USER" />
+
+      <Button onPress={() => quickLogin('U@web.de', '111111')} disabled={loading} text="Quick USER Login" />
+
+      <Button onPress={() => quickLogin('1234567887654321@gmail.com', '12345678')} disabled={loading} text="Quick ADMIN Login" />
 
       <Text style={styles.label}>Email</Text>
       <TextInput

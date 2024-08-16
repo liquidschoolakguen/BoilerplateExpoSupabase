@@ -1,5 +1,6 @@
 
 import { useOrderDetails } from '@/api/orders';
+import { useUpdateOrderListener } from '@/api/orders/subscriptions';
 import OrderItemListItem from '@/components/OrderItemListItem';
 import OrderListItem from '@/components/OrderListItem';
 import { Stack, useLocalSearchParams } from 'expo-router';
@@ -12,6 +13,8 @@ export default function OrderDetailScreen() {
   const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
   const { data: order, isLoading, error } = useOrderDetails(id);
+
+  useUpdateOrderListener(id);
 
   if (isLoading) {
     return <ActivityIndicator />;
