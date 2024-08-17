@@ -7,8 +7,10 @@ import { View, Text, StyleSheet, TextInput, Image, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useDeleteProduct, useInsertProduct, useProduct, useUpdateProduct } from '@/api/products';
-
-
+import * as  FileSystem from 'expo-file-system';
+import { randomUUID } from 'expo-crypto';
+import { supabase } from '@/lib/supabase';
+import { decode } from 'base64-arraybuffer';
 const CreateProductScreen = () => {
 
   const [name, setName] = useState('');
@@ -49,18 +51,13 @@ const CreateProductScreen = () => {
       setErrors('Please fill all fields');
       return false;
     }
-
     if (isNaN(parseFloat(price))) {
       setErrors('Price must be a number');
       return false;
     }
-
     setErrors('');
     return true
   }
-
-
-
 
 
   const onSubmit = () => {
@@ -72,41 +69,33 @@ const CreateProductScreen = () => {
   };
 
 
-  const onUpdate = () => {
+  const onUpdate = async () => {
     if (!validate()) {
       return;
     }
-
-
+    const imagePath = await uploadImage();
     // Save to database
-    updateProduct({ id, name, price: parseFloat(price), image }, {
+    updateProduct({ id, name, price: parseFloat(price), image: imagePath }, {
       onSuccess: () => {
         resetFileds();
         router.back();
       },
     });
-
-
   }
 
-
-  const onCreate = () => {
+  const onCreate = async () => {
     if (!validate()) {
       return;
     }
 
-    //console.warn('Create Product: ', name);
-
+    const imagePath = await uploadImage();
     // Save to database
-    insertProduct({ name, price: parseFloat(price), image }, {
+    insertProduct({ name, price: parseFloat(price), image: imagePath }, {
       onSuccess: () => {
         resetFileds();
         router.back();
       },
-
     });
-
-
   };
 
   const pickImage = async () => {
@@ -140,7 +129,6 @@ const CreateProductScreen = () => {
     Alert.alert('Confirm', 'Are you sure you want to delete this product?', [
       {
         text: 'Cancel',
-
       },
       {
         text: 'Delete',
@@ -149,6 +137,29 @@ const CreateProductScreen = () => {
       }
     ])
   }
+
+
+
+  const uploadImage = async () => {
+    // console.log('image:');
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, decode(base64), { contentType });
+    //console.log('error:', error);
+    if (data) {
+      return data.path;
+    }
+  };
+
 
   return (
     <View style={styles.container}  >
