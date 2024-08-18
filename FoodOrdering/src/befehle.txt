@@ -1,0 +1,20 @@
+
+//Zustand des letzten commits wiederherstellen und
+//alle ungetrackten Ordner/Dateien, die seitdem erstellt wurden entfernen
+git reset --hard HEAD
+git clean -fd
+
+
+// supabase lokal einrichten. Es wird ein supabase-Order im Projekt erzeugt
+npx supabase login
+npx supabase init
+--> Generate VS Code settings for Deno? [y/N] n
+--> Generate IntelliJ Settings for Deno? [y/N] n
+ npx supabase link --project-ref onhnobebucvymdpcdupt [Projekt-Referenz auf dem dashboard/settings finden und hier eintragen]
+
+// Tables vom RemoteDatabase auf die Lokale Database übertragen
+npx supabase db pull
+--> Enter your database password:  [mein Standart-Passwort]
+
+// supabase lädt die images runter und startet container. der container "vector" (AI-Datenbankfunktionalität) hat probleme verursacht und wird daher zunächst nicht gestartet
+ npx supabase start -x vector

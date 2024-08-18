@@ -16,6 +16,8 @@ const SignInScreen = () => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) Alert.alert('Error', 'fff: ' + error.message);
     setLoading(false);
+
+
   }
 
   useEffect(() => {
