@@ -1,4 +1,17 @@
 
+https://www.youtube.com/watch?v=rIYzLhkG9TA&t=501s
+https://notjust.notion.site/React-Native-Supabase-Masterclass-47a69a60bc464c399b5a0df4d3c4a630?p=17b64c48b42d4bd88679eed50e869c48&pm=s
+
+
+//man muss (vll) diesen befeh ausführen,
+// bevor man mit npx create-expo-app >AppName> -t die expoApp erzeugt
+npm install -g create-expo-app
+
+// wenn mal irgendetwas crasht:
+rm -rf node_modules/ package-lock.json
+npm install
+
+
 //Zustand des letzten commits wiederherstellen und
 //alle ungetrackten Ordner/Dateien, die seitdem erstellt wurden entfernen
 git reset --hard HEAD
@@ -18,3 +31,37 @@ npx supabase db pull
 
 // supabase lädt die images runter und startet container. der container "vector" (AI-Datenbankfunktionalität) hat probleme verursacht und wird daher zunächst nicht gestartet
  npx supabase start -x vector
+
+
+// bucket wird nicht übertragen. Also muss auf dem dashboard
+// noch ein bucket namens product-images erzeugt werden.
+6.39.49
+6.42.53
+
+
+--------------------STRIPE-----------------------------
+//edgefuction lokal starten
+npx supabase functions serve --env-file .env payment-sheet
+
+//Lokaler test
+curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/payment-sheet'     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'     --header 'Content-Type: application/json'     --data '{"amount":"1150"}'
+
+
+/* To invoke locally:
+
+  1. Run `supabase start` (start docker desktop)
+  2. npx supabase functions serve --env-file .env payment-sheet
+  3. Make an HTTP request:
+
+  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/payment-sheet' \
+    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
+    --header 'Content-Type: application/json' \
+    --data '{"name":"Mithat"}'
+
+*/
+
+
+
+//deploy
+npx supabase functions deploy payment-sheet
+6.59.40

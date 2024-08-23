@@ -47,6 +47,7 @@ const SignInScreen = () => {
         onChangeText={setEmail}
         placeholder="jon@gmail.com"
         style={styles.input}
+        autoCapitalize='none'
       />
 
       <Text style={styles.label}>Password</Text>
