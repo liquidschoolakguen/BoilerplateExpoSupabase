@@ -65,3 +65,8 @@ curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/payment-s
 //deploy
 npx supabase functions deploy payment-sheet
 6.59.40
+
+
+//git push
+ git remote add origin https://github.com/liquidschoolakguen/23_8_.git  //ich glaube dieser befehl bindet lediglich das lokale repository an github
+ git push -u origin master
