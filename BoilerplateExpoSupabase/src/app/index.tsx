@@ -29,7 +29,7 @@ const index = () => {
   if (!isAdmin) {
     //console.log('kein Admin');
    // console.log('_______________________');
-    return <Redirect href="/landing-page" />;
+    return <Redirect href="/landing-page-user" />;
 
   }
    // console.log('Admin');

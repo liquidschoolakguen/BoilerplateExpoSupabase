@@ -4,12 +4,16 @@ import Button from '../../components/Button';
 import Colors from '../../constants/Colors';
 import { Link, Stack } from 'expo-router';
 import { supabase } from '@/lib/supabase';
+import { useTranslation } from 'react-i18next';
+
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [triggerSignIn, setTriggerSignIn] = useState(false);
+
+  const { t } = useTranslation();
 
   async function signInWithEmail() {
     setLoading(true);
@@ -35,22 +39,22 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: 'Sign in' }} />
+      <Stack.Screen options={{ title: t('user_account.sign_in')}} />
 
       <Button onPress={() => quickLogin('U@web.de', '111111')} disabled={loading} text="Quick USER Login" />
 
       <Button onPress={() => quickLogin('1234567887654321@gmail.com', '12345678')} disabled={loading} text="Quick ADMIN Login" />
 
-      <Text style={styles.label}>Email</Text>
+      <Text style={styles.label}>{t('extra.email_adress')}</Text>
       <TextInput
         value={email}
         onChangeText={setEmail}
-        placeholder="jon@gmail.com"
+        placeholder={t('extra.placeholder_email_adress')}
         style={styles.input}
         autoCapitalize='none'
       />
 
-      <Text style={styles.label}>Password</Text>
+      <Text style={styles.label}>{t('extra.password')}</Text>
       <TextInput
         value={password}
         onChangeText={setPassword}
@@ -59,11 +63,11 @@ const SignInScreen = () => {
         secureTextEntry
       />
 
-      <Button onPress={signInWithEmail} disabled={loading} text={loading ? "Signing in..." : "Sign in"} />
+      <Button onPress={signInWithEmail} disabled={loading} text={loading ? t('user_account.signing_in...'): t('user_account.sign_in')} />
 
 
       <Link href="/sign-up" style={styles.textButton}>
-        Create an account
+      {t('user_account.create_account')}
       </Link>
     </View>
   );
